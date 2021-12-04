@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDaoImpl implements StudentDao {
-    FileInputStream fil=null;
-    SimpleDateFormat sm=new SimpleDateFormat("yyyy/MM/dd");
-    List<Student> list=new ArrayList<>();
-    Student student=null;
     BaseDaoPack baseDaoPack=new BaseDaoPack();
     @Override
     public List<Student> getAll() {
+        FileInputStream fil=null;
+        SimpleDateFormat sm=new SimpleDateFormat("yyyy/MM/dd");
+        List<Student> list=new ArrayList<>();
+        Student student=null;
         try {
             //文件路径
             fil=new FileInputStream("D:\\学习\\作业\\msg.txt");
@@ -59,7 +59,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public int insert(List<Student> list) {
         int update=0;
-        String sql = "insert student values(?,?,?)";
+        String sql = "insert into student values(?,?,?)";
         for (int i = 0; i < list.size(); i++) {
             Student student = list.get(i);
             update += baseDaoPack.update(sql, new Object[]{student.getName(), student.getBirthday(), student.getCountry()});
@@ -70,9 +70,8 @@ public class StudentDaoImpl implements StudentDao {
 
     @Test
     public void Test(){
-        getAll();
-
-        int insert = insert(list);
+        List<Student> all = getAll();
+        int insert = insert(all);
         System.out.println(insert);
     }
 }
