@@ -7,8 +7,6 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Year;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +30,7 @@ public class ExamTest {
         for (int i = 0; i < students.size(); i++) {
             System.out.println(students.get(i));
         }
+
     }
 
     /**
@@ -63,10 +62,11 @@ public class ExamTest {
     public void test_getStudentBySno(){
         /*题目(三)测试补全测试代码*/
         Student s = studentDao.getStudentBySno(10013);
-        String stuInfo=  "学号为"+s.getStudentNo()+"的详细信息：姓名 "+s.getStudentName()+","+s.getSex()+",今年"+(2021-s.getBorndate().getYear())
+        Date date=new Date();//当前时间
+        //被废弃的 .getYear() 是从1900年到现在的日期的差值
+        String stuInfo=  "学号为"+s.getStudentNo()+"的详细信息：姓名 "+s.getStudentName()+","+s.getSex()+",今年"+(date.getYear()-s.getBorndate().getYear())
                 +"岁,出生于"+simpleDateFormat.format(s.getBorndate())+",来自"+s.getGradeId()+"年级";//学生描述信息字符串
         System.out.println(stuInfo);
-
     }
 
     /**
@@ -99,20 +99,8 @@ public class ExamTest {
     public void test_countSexByGradeId(){
                  /*题目(五)测试代码补全*/
         Map<String, Integer> map = studentDao.countSexByGradeId(1);
-        List list = new ArrayList();
-        List list1=new ArrayList();
-            for (String key : map.keySet()) {
-                list.add(key);
-            }
-            for (int value : map.values()) {
-            list1.add(value);
-        }
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i)+"生总数：");
-            System.out.println(list1.get(i));
-        }
-
-
+        System.out.println("男生总数："+map.get("男"));
+        System.out.println("女生总数："+map.get("女"));
     }
 
     /**
@@ -135,8 +123,8 @@ public class ExamTest {
      */
     @Test
     public void test_getSNameAndGName(){
-        Map<String, String> map = studentDao.getSNameAndGName(27);
-        System.out.println(map);
         JDBCUtil.close();
+        Map<String, String> sNameAndGName = studentDao.getSNameAndGName( 27 );
+        System.out.println(sNameAndGName);
     }
 }

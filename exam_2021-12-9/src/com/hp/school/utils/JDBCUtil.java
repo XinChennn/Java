@@ -9,7 +9,7 @@ public class JDBCUtil {
     static {
         //静态带代码块：在类加载的时候只执行这一次
         try {
-            Class.forName( "com.mysql.jdbc.Driver" );
+             Class.forName( "com.mysql.jdbc.Driver" );
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -42,9 +42,9 @@ public class JDBCUtil {
          preparedStatement = connection.prepareStatement( sql );
         if (objects != null) {
              /* 代码补充：请完成给SQL语句占位符填充参数的代码（10分）*/
-                for (int i = 0; i < objects.length; i++) {
-                    preparedStatement.setObject(1+i,objects[i]);
-                }
+            for (int i = 0; i < objects.length; i++) {
+                preparedStatement.setObject( i+1,objects[i] );
+            }
         }
          resultSet = preparedStatement.executeQuery();
         return resultSet;
